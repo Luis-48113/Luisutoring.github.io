@@ -13,7 +13,7 @@ const phrases = [
     `the younger the berry the sweeter the cherry 😙`,
     `if she aint 10 or below i aint cracking at all 👍`,
     `the quicker the snack, the thicker the stack 😙`,
-    `gng follow my tt tiktok.com/@joel.has.gyatt`,
+    `follow my tiktok @nexus.website`,
     `iframe 0 nexus 1 👌`,
     `view this updates changelog {here}`,
     `gng if you pay me 10p ill add smth to my site 👌`,
