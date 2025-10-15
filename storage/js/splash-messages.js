@@ -13,7 +13,7 @@ const phrases = [
     `the younger the berry the sweeter the cherry 😙`,
     `if she aint 10 or below i aint cracking at all 👍`,
     `the quicker the snack, the thicker the stack 😙`,
-    `follow my tiktok @nexus.website`,
+    `follow my tiktok {@nexus.website}`,
     `iframe 0 nexus 1 👌`,
     `view this updates changelog {here}`,
     `gng if you pay me 10p ill add smth to my site 👌`,
@@ -413,6 +413,16 @@ async function changeText() {
             randomPhrase = randomPhrase.replace(
                 "{here}",
                 `<a href="/storage/text/changelog.txt" target="_blank" style="color: lightblue; text-decoration: underline; cursor: pointer;">here</a>`
+            );
+            paragraph.innerHTML = randomPhrase;
+        } else {
+            paragraph.textContent = randomPhrase;
+        }
+
+        if (randomPhrase.includes("{@nexus.website}")) {
+            randomPhrase = randomPhrase.replace(
+                "{@nexus.website}",
+                `<a href="/static/load/hvtrs8%2F-wuw%2Ctkkvoi.aoo%2FBngxws%2Cwgbqive" target="_self" style="color: lightblue; text-decoration: underline; cursor: pointer;">@nexus.website</a>`
             );
             paragraph.innerHTML = randomPhrase;
         } else {
