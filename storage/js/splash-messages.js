@@ -64,6 +64,7 @@ const phrases = [
     `sub teacher today yay`,
     `math test tomorrow`,
     `the bell just rang`,
+    `please speed i need this, my mum is kinda homless 🥀`,
     `calculator? more like calc-you-later! 🥀 (i didnt make this one)`,
     `forgot my pe clothes, again.`,
     `phonk 🗣️🗣️🔥🔥`,
