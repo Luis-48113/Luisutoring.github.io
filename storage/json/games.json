@@ -143,6 +143,12 @@
     "alt": "Cluster Rush",
     "title": "Cluster Rush"
   },
+    {
+    "url": "/static/embed?p=https://www.easyfun.gg/embed/clash-royale-cloud-online.html",
+    "img": "/pages/images/clashroyale.png",
+    "alt": "Clash Royale",
+    "title": "Clash Royale"
+  },
   {
     "url": "/pages/games-frame?url=/pages/games/cookie-clicker/",
     "img": "/pages/images/cck.webp",
