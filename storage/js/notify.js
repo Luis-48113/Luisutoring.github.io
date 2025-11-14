@@ -84,8 +84,14 @@ function createNotification(data) {
     toptext.style.color = 'white';
 
     const message = document.createElement('div');
-    message.textContent = data.message;
     message.style.marginBottom = '10px';
+
+    const htmlMessage = data.message.replace(
+        /(www\.[^\s]+)/g,
+        '<a href="https://$1" target="_blank" style="color:#4EA3FF; text-decoration:underline;">$1</a>'
+    );
+
+message.innerHTML = htmlMessage;
 
     const infostuff = document.createElement('div');
     infostuff.style.fontSize = '13px';
