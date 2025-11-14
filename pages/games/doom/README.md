@@ -1,5 +1,5 @@
-# WebGL Doom-ish
+# Run DOOM online
 
-A Doom wad/level renderer in progress.
+Run DOOM online without any VM.
 
-For more info + Demo - http://github.int13h.com/webgldoom 
+[Demo](http://donno2048.github.io/webdoom)

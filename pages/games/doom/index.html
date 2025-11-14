@@ -1,243 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<title>WebGL Doom - This is not a Doom port, this is just a tribute =P</title>
-		<link id="favicon" rel="shortcut icon" type="image/png" href="../he3d/favicon.png">
-		<style>
-			body {
-				background: #212121 url('images/background.gif') repeat left top;
-			}
-			div.info {
-				background: #212121 url('images/background2.gif') repeat left top;
-				border-radius: 25px;
-				color: #ccc;
-				margin:auto;
-				padding: 15px;
-				padding-top: 0px;
-				opacity: 0.8;
-				text-align: left;
-				width: 800px;
-			}
-			div.text {
-				background: #000000;
-				border-radius: 15px;
-				color: #ccc;
-				margin:auto;
-				padding: 15px;
-				opacity: 0.9;
-				text-align: justify;
-				width: 770px;
-			}
-			div.text p a, div.text ul li a, .hl {
-				color: #ff0000;
-			}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DOOM</title>
+    <script src="js-dos.js"></script>
 
-			h1, h2, h3 {
-				color: #FF0000;
-				font-size: 16pt;
-			}
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            overflow: hidden;
+        }
 
-			h2.update { cursor: pointer; }
-		</style>
-	</head>
-	<body>
-		<div class="info">
-			<div style="text-align: center;">
-				<img src="images/logo.png" alt="WebGL Doom" title="WebGL Doom">
-			</div>
-			<div class="text">
-				<h1>WebGL Doom</h1>
-				<p>...but not really, well at least not at the moment anyway. What we have here is
-					a WebGL renderer for displaying Doom Levels loaded directly from the Shareware
-					Wad file. This demo uses a <a href="http://glbsp.sourceforge.net/"
-					target="_blank">GLBSP</a> modified version of the original wad file can be
-					downloaded from
-					<a href="ftp://ftp.idsoftware.com/idstuff/doom/" target="_blank">the official
-					id software ftp</a> to make it more WebGL/OpenGL friendly.</p>
-				<p>While Doom may not look very complicated by todays standards there are quite a
-					few issues trying to render its data in an accellerated 3D enviroment, so there
-					is plently of little hacks and bodges along the way. Which you can try and
-					decipher from the spaghetti code at
-					<a href="https://github.com/HeavyIndustries/webgldoom" target="_blank">
-					https://github.com/HeavyIndustries/webgldoom</a>. At some point we plan to
-					do a technical write up on how we got to this stage.</p>
-				<p>This demo uses the excellent <a href="https://github.com/vjeux/jDataView"
-					target="_blank">jDataView.js</a> binary file reader we can pull out all the map
-					and texture	information from the wad file then construct the data into a
-					WebGL buffer. The rendering framework behind this demo is using our custom
-					built WebGL	engine <a href="https://github.com/HeavyIndustries/he3d"
-					target="_blank">he3d</a> which we'll not go into, its not important to this
-					demo, it just hides a lot of the html5/webgl/javascript gumpf away.</p>
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+            image-rendering: pixelated;
+            display: block;
+        }
 
-				<h2 class="update" onclick="toggle(this,'130711')">- 11th July 2013 Update:</h2>
-				<div id="130711">
-					<p>"Suppose we should really push the latest stuff to github" Edition (TM)<br>
-						The biggest change here is the addition of the 'world buffer', an offscreen
-						render target that all the walls, flats, things and such are rendered into.
-						This has some benfits such as pre-z calculation so we don't waste too much
-						time doing work fancy pixels that you'll never see.</p>
-					<p>Supposedly should give a nice performance boost in theory but that doesn't
-						seem to be the case, infact on Firefox at least it seems to have slowed it
-						down even more. So while we are killing performance how about we go all the
-						way and really butcher the framerate? Dynamic Lights and Screen Space
-						Ambient Occlusion (SSAO)!</p>
-					<p>The Dynamic Lights are for missle projectiles only so far, but there is no
-						reason why we couldn't detect certain THINGS that could emit light, like the
-						slime barrels and the little light stalks that litter the levels. Currently
-						the Dynamic Lights are hardlimited to 32.</p>
-					<p>SSAO is a subtle but awesome effect, you can toggle it using the . key,
-						keep an eye on the edges and corners of the walls and floors. Yeah, told
-						you it was subtle but now you've seen it, quite effective isn't it ;) Just
-						ignore the huge hit to your FPS =P</p>
+        /* remove leftover space from center tag */
+        center { display: contents; }
+    </style>
+</head>
 
-					<p>Other bits<br>
-						- Fixed(ish) projectiles getting stuck in the air.<br>
-						- THINGS update stack now more efficient.<br>
-						- THINGS now use a cylindrical billboarding style.<br>
-						- Probably some other fixes.
-					</p>
-					<p>It looks like a lot more was done as the diff is HUGE, this is pretty much
-						just because I decided to get a bit stricter on the code style and virtually
-						every line has been changed as a result =P</p>
-				</div>
+<body>
+    <canvas id="doomCanvas"></canvas>
 
-				<h2 class="update" onclick="toggle(this,'130221')">- 21st Feb 2013 Update:</h2>
-				<div id="130221" style="display:none;">
-					<p>Oops, been awhile since we've updated here.<br>
-						- Split game.js into seperate files, much more readable and managable now<br>
-						- Updated to latest features in HE3D engine<br>
-						- Added HUD/Statusbar stuff.<br>
-						- Moved the debug keys to z,x,c,v,etc. The number keys are for weapons*.<br>
-						- THINGS angle correctly... mostly<br>
-						- THINGS have gained some intelligence now, they'll turn and shoot at you
-							if you get close enough.<br>
-						- Fixed ALPHA on wall textures<br>
-						- Projectiles!<br>
-						- Heightmap is gone, using the BSP sector check now.<br>
-						- Fixed some missing sprites<br>
-						- Reworked lighting, now works on THINGS.<br>
-						- Added some parsing code for audio support, not ready for use yet<br>
-						- Added animated FLATS<br>
-						- Sprite name lookup is way faster now<br>
-						- Probably a lot more<br>
-						<i>* No you still can't fire the weapons yet =P</i></p>
-				</div>
-				
-				<h2 class="update" onclick="toggle(this,'130108')">- 8th Jan 2013 Update:</h2>
-				<div id="130108" style="display:none;">
-					<p>Heightmaps should transfer a bit better now as it doesn't try to upload
-						the map as a texture (this was crashing Chrome on E1M8).</p>
-					<p>Added some better collision detection against the heightmap, its still very
-						wrong but at least you shouldn't fall through the world too much now. Also
-						moved the players position and movement code into it's own thing instead of
-						using the camera. We now have fake gravity and mouse movement.</p>
-					<p>Added some visual lines to see which THINGS are being considered for what
-						will be collision testing later on. (Press 6 to toggle).</p>
-				</div>
-				
-				<h2 class="update" onclick="toggle(this,'130104')">+ 4th Jan 2013 Update</h2>
-				<div id="130104" style="display:none;">
-					<p>Heightmaps! Crazy over the top heightmaps to be precise. <em>"Thats not the
-						way	Doom did it!"</em>. I thought I'd try out rasterising the FLATS into a
-						massive	array for a per-pixel based heightmap. There is a good chance this
-						might cripple or crash your browser, I've only really tested it on
-						an i7 =P</p>
-					<p>As a result, the THINGS are in the right places now and in theory could move
-						around (when I get to that stage), in the mean time YOU can walk around in
-						there now, I've done some quick thrown together Doom style controls (yes
-						disabled looking up and down ;))</p>
-					<p>There is no friction for the walls or anything yet, so you will get stuck in
-						walls at some angles, hopefully you can back out of them if not, use the
-						freecam	mode (F key) to fly out of there</p>
-					<p>I've seen Chrome crash a few times on the bigger maps (due to the size of the
-						heightmap it needs to transfer back) like E1M8 so ymmv on workyness</p>
-				</div>
-				
-				<h2 class="update" onclick="toggle(this,'121226')">+ 26th Dec 2012 Update</h2>
-				<div id="121226" style="display:none;">
-					<p>THINGS! are now rendering animated in their spawnstate.</p>
-				</div>
-				
-				<h2 class="update" onclick="toggle(this,'121224')">+ 24th Dec 2012 Update</h2>
-				<div id="121224" style="display:none;">
-					<p>THINGS! (Doom's name for the 2d sprites you see on the map).
-						These are now rendering in their spawnstate and don't animate or move yet,
-						that will probably be the next stage. They also always face the camera,
-						which is correct but not the best way of drawing them. Ideally they would
-						only rotate on one axis, if you fly the camera above and look down you will
-						notice they are	flat on the ground. This is the Mario64 way of
-						billboarding.</p>
-				</div>
-				
-				<h2>The Demo</h2>
-				<p>Yeah yeah yeah, enough with the technical nonsense, click on one of the links
-					below to have a play around with it. Bare in mind that most of the maps don't
-					render correctly and some may even cause errors and stop it from running but
-					its still pretty fun to run around</p>
-				<ul>
-					<li><a href="doom.html#e1m1">E1M1 - Hanger</a></li>
-					<li><a href="doom.html#e1m2">E1M2 - Nuclear Plant</a></li>
-					<li><a href="doom.html#e1m3">E1M3 - Toxin Refinery</a></li>
-					<li><a href="doom.html#e1m4">E1M4 - Command Control</a></li>
-					<li><a href="doom.html#e1m5">E1M5 - Phobos Lab</a></li>
-					<li><a href="doom.html#e1m6">E1M6 - Central Processing</a></li>
-					<li><a href="doom.html#e1m7">E1M7 - Computer Station</a></li>
-					<li><a href="doom.html#e1m8">E1M8 - Phobos Anomaly</a></li>
-					<li><a href="doom.html#e1m9">E1M9 - Military Base (Secret Level)</a></li>
-				</ul>
+    <script>
+        const canvas = document.getElementById("doomCanvas");
 
-				<h2>Controls</h2>
-				<p>If you have a recent version of <a href="www.google.com/chrome" target="_blank">
-					Chrome</a> you should have access to the <a target="_blank"
-					href="http://www.chromium.org/developers/design-documents/mouse-lock">Pointer
-					Lock API</a>, click on the main view port and you should get a small popup at
-					the top of the screen asking you to allow mouse lock. This is a good thing...<br>
-					If you don't have a fancy new version of Chrome, you can use the cursor keys to
-					move your view around.</p>
-				<p>Other than that its your basic WASD style control scheme, you can use the Q and E
-					keys to float up and down. Yeah yeah, Doom didn't have up and down, it didn't
-					even have looking up and down but for the sake of this demo and to save my
-					sanity while developing this, you can (in freecam mode).</p>
-				<p><span class="hl">**NEW**</span> By default you walk around the map now, use the
-					F key to toggle noclip / freecam mode (useful when you get stuck in a wall)</p>
-				<p>There are a few other buttons you can fiddle with too, if your GPU is halfway
-					decent you can try maximising the viewport using ALT+RETURN, then if you are
-					feeling really fruity, hit F11 for full screen browser mode.</p>
-				<p>You can also toggle some of the rendering settings using z,x,c,v,b,n,m.</p>
-
-				<h2>Disclaimer</h2>
-				<p>We can't be held responsible for the quality of the code in this demo, we wrote
-					it ourselves and that should be enough of a warning for you. Sorry if it burns
-					down your cat or kicks your house, we didn't intend it to but these things just
-					tend to happen.</p>
-				<p>With this being Doom and all, we are also not responsible if you go on a mass
-					killing spree apparently that happens when you play video games.</p>
-
-				<h2>Other Resources</h2>
-				<p><a href="https://github.com/id-Software/DOOM" target="_blank">The Original
-					DOOM Source Code</a><br>
-					<a href="http://doomwiki.org/" target="_blank">Doom Wiki.org</a><br>
-					<a href="http://fabiensanglard.net/doomIphone/doomClassicRenderer.php"
-					target="_blank">Doom Code Review</a></p>
-				<p><small>Doom, Doom2 and Doom3 are trademarks of id Software.
-					All game logos, graphics, textures and assets are copyright their respective
-					owners. Please don't sue us, we	just like your games/tech and want to mess
-					around with them.</small></p>
-			</div>
-		</div>
-		<script src="http://cdn.webglstats.com/stat.js" defer="defer" async="async"></script>
-		<script type="text/javascript"
-			src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script>
-			function toggle (tag,t){
-				if ($('#'+t).is(":hidden")){
-					$(tag).text("- "+$(tag).text().substring(2)+":");
-					$('#'+t).slideDown('fast');
-				}else{
-					$(tag).text("+ "+$(tag).text().substring(2,$(tag).text().length-1));
-					$('#'+t).slideUp('fast');
-				};
-			};
-		</script>
-	</body>
+        Dos(canvas, { autolock: true }).ready((fs, main) => {
+            fs.extract("DOOM.ZIP").then(() => {
+                main(["-c", "DOOM"]).then((ci) => {
+                    window.ci = ci;
+                    document.title = "DOOM";
+                });
+            });
+        });
+    </script>
+</body>
 </html>
