@@ -240,6 +240,12 @@
     "title": "Doodle Jump"
   },
   {
+    "url": "/pages/games-frame?url=/pages/games/doom/",
+    "img": "/pages/images/doom.png",
+    "alt": "Doom",
+    "title": "Doom"
+  },
+  {
     "url": "/pages/games-frame?url=/pages/games/doodle-snake/",
     "img": "/pages/games/doodle-snake/google-snake.png",
     "alt": "Doodle Snake",
