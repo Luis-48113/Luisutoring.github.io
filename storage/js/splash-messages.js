@@ -10,7 +10,6 @@ const phrases = [
     `good boy`,
     `buy me a coffee? buymeacoffee.com/nexus.website`,
     `if blocked use: nexus-is.onthewifi.com`,
-    `gng follow my tt tiktok.com/@joel.has.gyatt`,
     `iframe 0 nexus 1 👌`,
     `view this updates changelog {here}`,
     `gng if you pay me 10p ill add smth to my site 👌`,
