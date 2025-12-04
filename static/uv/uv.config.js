@@ -1,6 +1,6 @@
 self.__uv$config = {
     prefix: '/static/load/',
-    bare:'https://we.internet-slackers.us/bare/',
+    bare:'https://ngg.lol/tspmo/',
     encodeUrl: Ultraviolet.codec.xor.encode,
     decodeUrl: Ultraviolet.codec.xor.decode,
     handler: '/static/uv/uv.handler.js',
